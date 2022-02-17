@@ -1,0 +1,24 @@
+{
+  "name": "calendar-app-backend",
+  "version": "1.0.0",
+  "description": "Calenda App backend system based on Node Js",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "start": "node dist/index.js",
+    "test": "nodemon dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcoCiau/calendar-app-backend.git"
+  },
+  "author": "Marco Ciau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcoCiau/calendar-app-backend/issues"
+  },
+  "homepage": "https://github.com/MarcoCiau/calendar-app-backend#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
