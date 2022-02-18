@@ -1,5 +1,6 @@
 import { body, validationResult, Result } from 'express-validator';
 import { Request, Response } from 'express';
+import { verifyAccessToken } from '../util/auth.util';
 
 export const rules = () => {
     return (
@@ -59,3 +60,18 @@ export const result = (req: Request, res: Response, next: any) => {
     }
     next();
 };
+
+export const validateJWT = async (req: Request, res: Response, next: any) => {
+    try {
+        let token = req.header('x-token');
+        if (!token) {
+            return res.status(401).json({ status: false, msg: "token is not present in the headers" });
+        }
+        let jwtPayload = await verifyAccessToken(token);
+        res.locals.jwtPayload = jwtPayload;
+        next();
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ status: false, msg: "Invalid or Expired JWT", error });
+    }
+}
