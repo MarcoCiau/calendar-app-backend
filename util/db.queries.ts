@@ -7,6 +7,7 @@ export const executeEventCustomQuery = (query: string, from: number = 0, limit: 
         }
         queryObj = {...JSON.parse(query)};
         EventModel.find(queryObj)
+            .populate('user', 'name')
             .skip(from)
             .limit(limit)
             .sort({ start: sort })

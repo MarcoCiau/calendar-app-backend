@@ -20,7 +20,7 @@ export const getEvents = async (req: Request, res: Response) => {
 export const getEvent = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const result = await EventModel.findOne({ _id: id });
+        const result = await EventModel.findOne({ _id: id }).populate('user', 'name');
         if (!result) {
             return res.status(400).json({ status: false, msg: 'Event doesn\'t exists' });
         }
@@ -37,7 +37,7 @@ export const createEvent = async (req: Request, res: Response) => {
         const userExists = await UserModel.findOne({ _id: userId });
         if (!userExists) return res.status(400).json({ status: false, msg: 'Invalid User' });
         const newEvent = new EventModel({
-            userId,
+            user: userId,
             ...req.body
         });
         const result = await newEvent.save();

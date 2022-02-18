@@ -4,7 +4,7 @@ import { Types, Schema, model, Document } from "mongoose";
 interface Event {
     title: string,
     notes: string,
-    userId: Types.ObjectId,
+    user: Types.ObjectId,
     start: Date,
     end: Date,
 }
@@ -12,7 +12,7 @@ interface Event {
 const eventSchema: Schema<Event> = new Schema({
     title: { type: String, required: true },
     notes: { type: String },
-    userId: {
+    user: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Users"
