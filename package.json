@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "tsc",
-    "start": "node dist/app.js",
-    "test": "nodemon dist/app.js",
+    "start": "node dist/index.js",
+    "test": "nodemon dist/index.js",
     "watch-ts": "tsc -w"
   },
   "repository": {
