@@ -3,6 +3,8 @@ import envConfig from "../config/config";
 import connectDB from "../config/db";
 import cors from "cors";
 import authRoutes from "../routes/auth";
+import eventRoutes from "../routes/event";
+
 class Server {
     private app: Application;
     private port: string;
@@ -24,6 +26,7 @@ class Server {
 
     routes() {
         this.app.use('/api/v1/auth', authRoutes);
+        this.app.use('/api/v1/event', eventRoutes);
     }
 
     listen() {
