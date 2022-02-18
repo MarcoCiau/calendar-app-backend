@@ -4,6 +4,9 @@ import { Request, Response } from 'express';
 export const rules = () => {
     return (
         [
+            body('name')
+                .notEmpty()
+                .trim(),
             body('password')
                 .isLength({ min: 8 })
                 .trim(),
@@ -52,7 +55,7 @@ export const forgotPasswordRules = () => {
 export const result = (req: Request, res: Response, next: any) => {
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ status: false, errors: errors.array() });
     }
     next();
 };

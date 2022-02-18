@@ -4,12 +4,13 @@ import RefreshTokenModel from '../models/refreshToken';
 import { hashPassword, generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../util/auth.util';
 
 export const signup = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     try {
         const userExists = await UserModel.findOne({ email });
         if (userExists) return res.status(400).json({ msg: 'User already exists.' });
         const hashedPassword: string = await hashPassword(password);
         const userDoc = new UserModel({
+            name,
             email,
             password: hashedPassword
         });
