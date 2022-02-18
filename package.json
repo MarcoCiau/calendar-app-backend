@@ -4,9 +4,10 @@
   "description": "Calenda App backend system based on Node Js",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc",
-    "start": "node dist/index.js",
-    "test": "nodemon dist/index.js"
+    "postinstall": "tsc",
+    "start": "node dist/app.js",
+    "test": "nodemon dist/app.js",
+    "watch-ts": "tsc -w"
   },
   "repository": {
     "type": "git",
