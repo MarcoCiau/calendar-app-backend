@@ -7,7 +7,8 @@ export const rules = () => {
         [
             body('name')
                 .notEmpty()
-                .trim(),
+                .trim()
+                .optional(),
             body('password')
                 .isLength({ min: 8 })
                 .trim(),
