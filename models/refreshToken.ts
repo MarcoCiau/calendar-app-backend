@@ -1,12 +1,12 @@
 import { Schema, model, Types } from "mongoose";
 
 interface Token {
-    userId: Types.ObjectId,
+    user: Types.ObjectId,
     refreshToken: string
 }
 
 const tokenSchema: Schema<Token> = new Schema({
-    userId: {
+    user: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Users"
