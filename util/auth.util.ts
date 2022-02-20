@@ -57,11 +57,11 @@ export const compareHash = async (data: string, hashed: string) => {
 }
 
 export const generateAccessToken = async (userId: string) => {
-    return generateJWT(userId, config.ACCESS_TOKEN_KEY, '1h');
+    return generateJWT(userId, config.ACCESS_TOKEN_KEY, '60000');
 };
 
 export const generateRefreshToken = async (userId: string) => {
-    return generateJWT(userId, config.REFRESH_TOKEN_KEY, '60000');
+    return generateJWT(userId, config.REFRESH_TOKEN_KEY, '1h');
 };
 
 export const verifyAccessToken = async (token: string) => {
