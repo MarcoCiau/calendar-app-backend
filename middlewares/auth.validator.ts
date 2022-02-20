@@ -36,8 +36,6 @@ export const resetPasswordRules = () => {
 export const refreshTokendRules = () => {
     return (
         [
-            body('userId')
-                .isMongoId(),
             body('refreshToken')
                 .notEmpty()
         ]
@@ -57,7 +55,7 @@ export const forgotPasswordRules = () => {
 export const result = (req: Request, res: Response, next: any) => {
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ status: false, errors: errors.array() });
+        return res.status(400).json({ status: false, msg: "Invalid Form Values", errors: errors.array() });
     }
     next();
 };
