@@ -15,7 +15,19 @@ export const signup = async (req: Request, res: Response) => {
             password: hashedPassword
         });
         const result = await userDoc.save();
-        res.status(200).json({ status: true, msg: "user signup successfully", user: result });
+        /* Generate Refresh & Access Tokens */
+        const [refreshToken, accessToken] = await Promise.all([generateRefreshToken(result._id), generateAccessToken(result._id)]);
+        /* Remove previous token for this user */
+        const refreshTokenExists = await RefreshTokenModel.findOne({ user: result._id });
+        if (refreshTokenExists) refreshTokenExists.deleteOne();
+        /* Create & Save new Refresh Token */
+        const refreshTokenDoc = new RefreshTokenModel({
+            user: result._id,
+            refreshToken: refreshToken
+        });
+        const newRefreshToken = await refreshTokenDoc.save();
+        /* Send Response */
+        res.status(200).json({ status: true, msg: "user signup successfully", user: result,accessToken, refreshToken: newRefreshToken.refreshToken });
     } catch (error) {
         console.log('Signing up user failed.', error);
         res.status(500).json({ status: false, msg: 'something went wrong.' })
@@ -27,20 +39,20 @@ export const signin = async (req: Request, res: Response) => {
     try {
         /* Verify User */
         const userExists = await UserModel.findOne({ email });
-        if (!userExists) return res.status(400).json({ status: true, msg: 'User Doesn\'t exists or the email is invalid.' });
+        if (!userExists) return res.status(400).json({ status: false, msg: 'User Doesn\'t exists or the email is invalid.' });
         /* Validate Password */
         const isValidPassword = await userExists.comparePassword(password);
         if (!isValidPassword) {
-            return res.status(400).json({ status: true, msg: 'Invalid Password.' });
+            return res.status(400).json({ status: false, msg: 'Invalid Password.' });
         }
         /* Generate Refresh & Access Tokens */
         const [refreshToken, accessToken] = await Promise.all([generateRefreshToken(userExists._id), generateAccessToken(userExists._id)]);
         /* Remove previous token for this user */
-        const refreshTokenExists = await RefreshTokenModel.findOne({ userId: userExists._id });
+        const refreshTokenExists = await RefreshTokenModel.findOne({ user: userExists._id });
         if (refreshTokenExists) refreshTokenExists.deleteOne();
         /* Create & Save new Refresh Token */
         const refreshTokenDoc = new RefreshTokenModel({
-            userId: userExists._id,
+            user: userExists._id,
             refreshToken: refreshToken
         });
         const newRefreshToken = await refreshTokenDoc.save();
@@ -61,24 +73,25 @@ export const refreshToken = async (req: Request, res: Response) => {
     - create new access & refresh token
     */
     try {
-        const { refreshToken, userId } = req.body;
+        const { refreshToken} = req.body;
+        /* Verify Refresh Token */
+        const validToken: any = await verifyRefreshToken(refreshToken);
+        if (!validToken) return res.status(400).json({ status: false, msg: 'Verify JWT Failed: Refresh Token is expired or invalid' });
+        const {userId} = validToken;
         /* Check if current refresh token exists */
-        const refreshTokenExists = await RefreshTokenModel.findOne({ userId, refreshToken });
+        const refreshTokenExists = await RefreshTokenModel.findOne({ user: userId, refreshToken });
         if (!refreshTokenExists) return res.status(400).json({ status: false, msg: 'Refresh Token Doesn\t exists in DB' });
         refreshTokenExists.deleteOne();
-        /* Verify Refresh Token */
-        const validToken = await verifyRefreshToken(refreshToken);
-        if (!validToken) return res.status(400).json({ status: false, msg: 'Verify JWT Failed: Refresh Token is expired or invalid' });
         /* Generate Refresh & Access Tokens */
         const [newRefreshToken, accessToken] = await Promise.all([generateRefreshToken(userId), generateAccessToken(userId)]);
         /* Create & Save new Refresh Token */
         const refreshTokenDoc = new RefreshTokenModel({
-            userId,
+            user: userId,
             refreshToken: newRefreshToken
         });
-        const result = await refreshTokenDoc.save();
+        const result = await (await refreshTokenDoc.save()).populate('user', 'name');
         /* Send Response */
-        res.status(200).json({ status: true, msg: 'refresh token updated', accessToken, refreshToken: result.refreshToken });
+        res.status(200).json({ status: true, msg: 'refresh token updated', accessToken, user: result.user ,refreshToken: result.refreshToken });
     } catch (error) {
         console.log('reset refresh token failed.', error);
         res.status(500).json({ msg: 'something went wrong.' });
