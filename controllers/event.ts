@@ -40,7 +40,7 @@ export const createEvent = async (req: Request, res: Response) => {
             user: userId,
             ...req.body
         });
-        const result = await newEvent.save();
+        const result = await (await newEvent.save()).populate('user', 'name');
         if (!result) return res.status(400).json({ status: false, msg: 'Creating new event failed' });
         res.status(200).json({ status: true, msg: 'success', event: result });
     } catch (error) {
@@ -54,11 +54,11 @@ export const updateEvent = async (req: Request, res: Response) => {
         const { id } = req.params;
         const body = req.body;
 
-        const result = await EventModel.findOneAndUpdate({ _id: id }, { ...body }, { new: true });
+        const result = await EventModel.findOneAndUpdate({ _id: id }, { ...body }, { new: true }).populate('user', 'name');
         if (!result) {
             return res.status(400).json({ status: false, msg: 'Updating Event failed' });
         }
-        res.status(200).json({ status: true, msg: 'success', device: result });
+        res.status(200).json({ status: true, msg: 'success', event: result });
     } catch (error) {
         console.log('update device failed.', error);
         res.status(500).json({ status: false, msg: 'something went wrong.' });
@@ -68,7 +68,7 @@ export const updateEvent = async (req: Request, res: Response) => {
 export const deleteEvent = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const result = await EventModel.findByIdAndDelete({ _id: id });
+        const result = await EventModel.findByIdAndDelete({ _id: id }).populate('user', 'name');
         if (!result) {
             return res.status(400).json({ status: false, msg: 'Event doesn\'t exists' });
         }
