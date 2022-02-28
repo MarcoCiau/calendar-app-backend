@@ -41,7 +41,6 @@ export const createRules = () => {
                 .isString()
                 .trim(),
             body('notes')
-                .notEmpty()
                 .isString()
                 .trim()
                 .optional(),
@@ -73,7 +72,6 @@ export const updateRules = () => {
                 .trim()
                 .optional(),
             body('notes')
-                .notEmpty()
                 .isString()
                 .trim()
                 .optional(),
