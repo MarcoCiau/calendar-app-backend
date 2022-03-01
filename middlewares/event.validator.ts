@@ -1,5 +1,6 @@
 import { body, param, query, validationResult, Result, CustomValidator, checkSchema, Schema } from 'express-validator';
 import { Request, Response } from 'express';
+import { ServerResponse } from '../util/server.response';
 
 let validateSortValue: CustomValidator = value => {
     return (Number(value) === -1 || Number(value) === 1)
@@ -90,7 +91,7 @@ export const updateRules = () => {
 export const result = (req: Request, res: Response, next: any) => {
     const errors: Result = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ status: false,  errors: errors.array() });
+        return res.status(400).json({ status: false,  msg: ServerResponse.ERROR_REQUEST_VALIDATOR, errors: errors.array() });
     }
     next();
 };
