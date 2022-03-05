@@ -7,7 +7,7 @@ export enum ServerResponse {
     ERROR_MISSING_TOKEN = "missing Token",
     ERROR_INTERNAL_SERVER = "an unexpected condition encountered",
     ERROR_DB_QUERY_FAILED = "DB's query failed",
-    ERROR_EVENT_NOT_FOUND = "event not found with provided userId",
+    ERROR_EVENT_NOT_FOUND = "event not found with provided Id",
     ERROR_REQUEST_VALIDATOR = "request data [body, header, query or params] trouble encountered",
     OK_PROCESS = "process sucess",
 }
