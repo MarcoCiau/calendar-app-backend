@@ -8,7 +8,7 @@ export const signup = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
     try {
         const userExists = await UserModel.findOne({ email });
-        if (userExists) return res.status(400).json({ status: false, msg: ServerResponse.ERROR_USER_EXISTS});
+        if (userExists) return res.status(400).json({ status: false, msg: ServerResponse.ERROR_USER_EXISTS });
         const hashedPassword: string = await hashPassword(password);
         const userDoc = new UserModel({
             name,
@@ -28,7 +28,7 @@ export const signup = async (req: Request, res: Response) => {
         });
         const newRefreshToken = await refreshTokenDoc.save();
         /* Send Response */
-        res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, user: result,accessToken, refreshToken: newRefreshToken.refreshToken });
+        res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, user: result, accessToken, refreshToken: newRefreshToken.refreshToken });
     } catch (error) {
         console.log('Signing up user failed.', error);
         res.status(500).json({ status: false, msg: ServerResponse.ERROR_INTERNAL_SERVER });
@@ -44,7 +44,7 @@ export const signin = async (req: Request, res: Response) => {
         /* Validate Password */
         const isValidPassword = await userExists.comparePassword(password);
         if (!isValidPassword) {
-            return res.status(400).json({ status: false, msg: ServerResponse.ERROR_USER_BAD_PASSWORD});
+            return res.status(400).json({ status: false, msg: ServerResponse.ERROR_USER_BAD_PASSWORD });
         }
         /* Generate Refresh & Access Tokens */
         const [refreshToken, accessToken] = await Promise.all([generateRefreshToken(userExists._id), generateAccessToken(userExists._id)]);
@@ -61,7 +61,7 @@ export const signin = async (req: Request, res: Response) => {
         res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, user: userExists, accessToken, refreshToken: newRefreshToken.refreshToken });
     } catch (error) {
         console.log('Signing in user failed.', error);
-        res.status(500).json({ status: false, msg: ServerResponse.ERROR_INTERNAL_SERVER})
+        res.status(500).json({ status: false, msg: ServerResponse.ERROR_INTERNAL_SERVER })
     }
 }
 
@@ -74,11 +74,11 @@ export const refreshToken = async (req: Request, res: Response) => {
     - create new access & refresh token
     */
     try {
-        const { refreshToken} = req.body;
+        const { refreshToken } = req.body;
         /* Verify Refresh Token */
         const validToken: any = await verifyRefreshToken(refreshToken);
-        if (!validToken) return res.status(400).json({ status: false, msg: ServerResponse.ERROR_EXPIRED_TOKEN});
-        const {userId} = validToken;
+        if (!validToken) return res.status(400).json({ status: false, msg: ServerResponse.ERROR_EXPIRED_TOKEN });
+        const { userId } = validToken;
         /* Check if current refresh token exists */
         const refreshTokenExists = await RefreshTokenModel.findOne({ user: userId, refreshToken });
         if (!refreshTokenExists) return res.status(400).json({ status: false, msg: ServerResponse.ERROR_INVALID_TOKEN });
@@ -92,9 +92,9 @@ export const refreshToken = async (req: Request, res: Response) => {
         });
         const result = await (await refreshTokenDoc.save()).populate('user', 'name');
         /* Send Response */
-        res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, accessToken, user: result.user ,refreshToken: result.refreshToken });
-    } catch (error) {
-        console.log('reset refresh token failed.', error);
-        res.status(500).json({ msg: ServerResponse.ERROR_INTERNAL_SERVER });
+        res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, accessToken, user: result.user, refreshToken: result.refreshToken });
+    } catch (err: any) {
+        console.log('reset refresh token failed.', err);
+        res.status(400).json({ status: false, msg: err.message });
     }
 }
