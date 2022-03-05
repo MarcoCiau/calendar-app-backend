@@ -56,15 +56,16 @@ User Login.
 
 ```json
 {
-    "status": true,
-    "msg": "process sucess",
-    "user": {
-        "_id": "62237a78c03523c03ef014de",
-        "name": "user name",
-        "email": "user@mail.com"
-    },
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjIzN2E3OGMwMzUyM2MwM2VmMDE0ZGUiLCJpYXQiOjE2NDY0OTI3MjAsImV4cCI6MTY0NjQ5Mjc4MH0.8Ewd9hlO06BojIfoI_DhyC51LTsdxAh1Z-_HV8MhVhE",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjIzN2E3OGMwMzUyM2MwM2VmMDE0ZGUiLCJpYXQiOjE2NDY0OTI3MjAsImV4cCI6MTY0NjQ5NjMyMH0.GimTwmjNQ1dKOora7OuCLMoMa0INbUfEJZ13i_NFQKI"
+    "status": false,
+    "msg": "request data [body, header, query or params] trouble encountered",
+    "errors": [
+        {
+            "value": "1234567",
+            "msg": "Invalid value",
+            "param": "password",
+            "location": "body"
+        }
+    ]
 }
 ```
 
