@@ -8,15 +8,7 @@ User Login.
 
 **Auth required** : NO
 
-**Data constraints**
-
-```json
-{
-    "refreshToken": "[JWT Token]"
-}
-```
-
-**Request Body Example**
+**Request Body**
 ```javascript
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjIzN2E3OGMwMzUyM2MwM2VmMDE0ZGUiLCJpYXQiOjE2NDY0OTk2ODksImV4cCI6MTY0NjUwMzI4OX0.6YNN8aM2GU8_jUMxnKdwbNkum88qhrbYHWc-XlftWRU"
@@ -64,6 +56,8 @@ User Login.
 }
 ```
 
+---
+
 **Condition** : If 'refresh token' doesn't match with the signature key.
 
 **Code** : `400 BAD REQUEST`
@@ -77,6 +71,7 @@ User Login.
 }
 ```
 
+---
 **Condition** : If 'refresh token' is expired.
 
 **Code** : `400 BAD REQUEST`

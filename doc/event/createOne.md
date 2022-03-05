@@ -25,7 +25,7 @@ Create new event.
   "end": "2022-02-18T17:50:00.000Z"
 }
 ```
-Note: 'notes' is optional
+Note: **notes** is optional
 
 ## Success Response
 
@@ -92,6 +92,8 @@ Note: 'notes' is optional
 }
 ```
 
+---
+
 **Condition** : If 'access token' doesn't match with the signature key.
 
 **Code** : `401 UNAUTHORIZED`
@@ -104,6 +106,8 @@ Note: 'notes' is optional
     "msg": "invalid signature"
 }
 ```
+
+---
 
 **Condition** : If 'access token' is expired.
 

@@ -8,23 +8,14 @@ User Login.
 
 **Auth required** : NO
 
-**Data constraints**
-
-```json
-{
-    "email": "[valid email address]",
-    "password": "[password in plain text]"
-}
-```
-
-
-**Request Body Example**
+**Request Body**
 ```javascript
 {
     "email":"user@mail.com",
     "password":"12345678"
 }
 ```
+Note: **password** min length is 8
 
 ## Success Response
 
@@ -68,6 +59,8 @@ User Login.
     ]
 }
 ```
+
+---
 
 **Condition** : If 'email' and 'password' combination is wrong.
 

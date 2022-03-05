@@ -17,9 +17,9 @@ Get all events belongs to the current users. Optionally we can execute offset pa
 
 **Request Params**
 
-***from***: offset pagination items
-***limit***: limit pagination items
-***sort***: sorting events by 'start' date. Must be **1** or **-1**.
+- ***from***: offset pagination items
+- ***limit***: limit pagination items
+- ***sort***: sorting events by 'start' date. Must be **1** or **-1**.
 
 ## Success Response
 
@@ -77,6 +77,8 @@ Get all events belongs to the current users. Optionally we can execute offset pa
 }
 ```
 
+---
+
 **Condition** : If 'access token' doesn't match with the signature key.
 
 **Code** : `401 UNAUTHORIZED`
@@ -89,6 +91,8 @@ Get all events belongs to the current users. Optionally we can execute offset pa
     "msg": "invalid signature"
 }
 ```
+
+---
 
 **Condition** : If 'access token' is expired.
 

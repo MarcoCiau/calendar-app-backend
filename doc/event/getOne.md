@@ -17,7 +17,7 @@ Get event by Id.
 
 **Request Params**
 
-***:id***: event Id. Must be a MongoDB ObjectId type.
+- ***:id***: event Id. Must be a MongoDB ObjectId type.
 
 ## Success Response
 
@@ -61,6 +61,8 @@ Get event by Id.
 }
 ```
 
+---
+
 **Condition** : If provided event 'Id' is wrong.
 
 **Code** : `400 BAD REQUEST`
@@ -82,6 +84,8 @@ Get event by Id.
 }
 ```
 
+---
+
 **Condition** : If 'access token' doesn't match with the signature key.
 
 **Code** : `401 UNAUTHORIZED`
@@ -94,6 +98,8 @@ Get event by Id.
     "msg": "invalid signature"
 }
 ```
+
+---
 
 **Condition** : If 'access token' is expired.
 

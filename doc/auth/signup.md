@@ -8,16 +8,7 @@ User Registration.
 
 **Auth required** : NO
 
-**Data constraints**
-
-```json
-{
-    "name": "[user name]",
-    "email": "[valid email address]",
-    "password": "[password in plain text - min length: 8]"
-}
-```
-**Request Body Example**
+**Request Body**
 ```javascript
 {
     "name":"user name",
@@ -25,6 +16,7 @@ User Registration.
     "password":"12345678"
 }
 ```
+Note: **password** min length is 8
 
 ## Success Response
 
@@ -67,6 +59,8 @@ User Registration.
     ]
 }
 ```
+
+---
 
 **Condition** : If 'email' is already registered.
 

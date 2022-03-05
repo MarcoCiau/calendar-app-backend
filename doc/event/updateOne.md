@@ -1,16 +1,35 @@
-# Delete Event by Id
+# Update an Event
 
-Delete an event by Id. 
+Update an existing event. We can modify 'title', 'notes', 'start' and 'end' values optionally.
 
 **URL** : `/api/v1/auth/event/:id`
 
-**Method** : `DELETE`
+**Method** : `PUT`
 
 **Auth required** : Yes
 
+**Request Headers** 
+```json
+{
+    "x-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjIzN2E3OGMwMzUyM2MwM2VmMDE0ZGUiLCJpYXQiOjE2NDY0OTk3MDAsImV4cCI6MTY0NjQ5OTc2MH0.pmfaumTcfKFP3Lgf82RWpo1Cd6_aAVcfVy9SRHpInxk",
+}
+```
+
 **Request Params**
 
-- ***:id***: event Id. Must be a MongoDB ObjectId type.
+***:id***: event Id. Must be a MongoDB ObjectId type.
+
+**Request Body**
+
+```json
+{
+  "title": "Business meeting - Modified",
+  "notes": "Check my notes - Modified",
+  "start": "2022-02-18T17:00:00.000Z",
+  "end": "2022-02-18T17:50:00.000Z"
+}
+```
+Note: **notes** is optional
 
 ## Success Response
 
@@ -23,9 +42,9 @@ Delete an event by Id.
     "status": true,
     "msg": "process sucess",
     "event": {
-        "_id": "62239b51d9ee4a39a9917c57",
-        "title": "Visit place 2",
-        "notes": "make a call before",
+        "_id": "6223aae975030b02152f05c2",
+        "title": "Business meeting - Modified",
+        "notes": "Check my notes - Modified",
         "user": {
             "_id": "62237a78c03523c03ef014de",
             "name": "user name"
@@ -43,17 +62,16 @@ Delete an event by Id.
 **Code** : `400 BAD REQUEST`
 
 **Content** :
-
 ```json
 {
     "status": false,
-    "msg": "event not found with provided userId"
+    "msg": "event not found with provided Id"
 }
 ```
 
 ---
 
-**Condition** : If provided event 'Id' is wrong.
+**Condition** : If 'Id', 'title', 'start', 'end' & 'notes' values are empty or invalid.
 
 **Code** : `400 BAD REQUEST`
 
@@ -65,10 +83,16 @@ Delete an event by Id.
     "msg": "request data [body, header, query or params] trouble encountered",
     "errors": [
         {
-            "value": "620ff90da449a40a500274e",
+            "value": "",
             "msg": "Invalid value",
-            "param": "id",
-            "location": "params"
+            "param": "end",
+            "location": "body"
+        },
+        {
+            "value": "",
+            "msg": "Invalid value",
+            "param": "end",
+            "location": "body"
         }
     ]
 }
