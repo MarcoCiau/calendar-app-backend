@@ -6,8 +6,9 @@ import { ServerResponse } from '../util/server.response';
 
 export const getEvents = async (req: Request, res: Response) => {
     try {
-        const { query = "", from = 0, limit = 5, sort = 1 } = req.query;
-        const events: any = await executeEventCustomQuery(query.toString(), Number(from), Number(limit), Number(sort));
+        const { from = 0, limit = 5, sort = 1 } = req.query;
+        const { userId } = res.locals.jwtPayload;
+        const events: any = await executeEventCustomQuery(userId, Number(from), Number(limit), Number(sort));
         if (!events) {
             res.status(400).json({ status: false, msg: ServerResponse.ERROR_DB_QUERY_FAILED })
         }

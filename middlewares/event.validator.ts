@@ -6,10 +6,6 @@ let validateSortValue: CustomValidator = value => {
     return (Number(value) === -1 || Number(value) === 1)
 }
 
-let validateQueryString: CustomValidator = value => {
-    return JSON.parse(value).hasOwnProperty('userId');
-}
-
 export const getAllRules = () => {
     return (
         [
@@ -26,9 +22,6 @@ export const getAllRules = () => {
             query('sort')
                 .isInt()
                 .custom(validateSortValue)
-                .optional(),
-            query('query')
-                .custom(validateQueryString)
                 .optional(),
         ]
     )
