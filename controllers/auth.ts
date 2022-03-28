@@ -30,7 +30,7 @@ export const signup = async (req: Request, res: Response) => {
         /* Send Response */
         res.status(200).json({ status: true, msg: ServerResponse.OK_PROCESS, user: result, accessToken, refreshToken: newRefreshToken.refreshToken });
     } catch (error) {
-        console.log('Signing up user failed.', error);
+        console.log('Signup up user failed.', error);
         res.status(500).json({ status: false, msg: ServerResponse.ERROR_INTERNAL_SERVER });
     }
 }
