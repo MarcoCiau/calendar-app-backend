@@ -1,5 +1,7 @@
-import Server from './server/server';
-const server = new Server();
+import server from './server/server';
 
-server.init();
+server.init()
+    .catch(err => {
+        console.log("Init Server Failed!");
+    });
 
