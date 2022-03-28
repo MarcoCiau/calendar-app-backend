@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import envConfig from "../config/config";
-import connectDB from "../config/db";
+import { connectDB } from "../config/db";
 import cors from "cors";
 import authRoutes from "../routes/auth";
 import eventRoutes from "../routes/event";
@@ -38,7 +38,7 @@ class Server {
     getApp() {
         return this.app;
     }
-    
+
     async init() {
         try {
             await connectDB();
