@@ -35,6 +35,10 @@ class Server {
         });
     }
 
+    getApp() {
+        return this.app;
+    }
+    
     async init() {
         try {
             await connectDB();
@@ -45,5 +49,5 @@ class Server {
         }
     }
 }
-
-export default Server;
+const server = new Server();
+export default server;
