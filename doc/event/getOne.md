@@ -2,7 +2,7 @@
 
 Get event by Id. 
 
-**URL** : `/api/v1/auth/event/:id`
+**URL** : `/api/v1/event/:id`
 
 **Method** : `GET`
 

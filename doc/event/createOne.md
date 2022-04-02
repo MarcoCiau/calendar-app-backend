@@ -2,7 +2,7 @@
 
 Create new event.
 
-**URL** : `/api/v1/auth/event`
+**URL** : `/api/v1/event`
 
 **Method** : `POST`
 

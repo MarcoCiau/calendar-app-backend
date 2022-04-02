@@ -2,7 +2,7 @@
 
 Get all events belongs to the current users. Optionally we can execute offset pagination & sort items by 'start' date.
 
-**URL** : `/api/v1/auth/event?from=0&limit=54&sort=-1`
+**URL** : `/api/v1/event?from=0&limit=54&sort=-1`
 
 **Method** : `GET`
 

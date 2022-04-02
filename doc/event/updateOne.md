@@ -2,7 +2,7 @@
 
 Update an existing event. We can modify 'title', 'notes', 'start' and 'end' values optionally.
 
-**URL** : `/api/v1/auth/event/:id`
+**URL** : `/api/v1/event/:id`
 
 **Method** : `PUT`
 
